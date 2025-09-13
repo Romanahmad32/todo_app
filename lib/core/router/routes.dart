@@ -6,21 +6,26 @@ import 'go_router_observer.dart';
 
 final GlobalKey<NavigatorState> _rootNavigatorKey =
     GlobalKey<NavigatorState>(debugLabel: 'root');
+
+final GlobalKey<NavigatorState> _shellNavigatorKey =
+    GlobalKey<NavigatorState>(debugLabel: 'shell');
 final routes = GoRouter(
-  initialLocation: '/home',
+  initialLocation: '/home/dashboard',
   navigatorKey: _rootNavigatorKey,
   observers: [GoRouterObserver()],
   routes: [
-    GoRoute(
-      path: '/home/settings',
-      builder: (context, state) => Container(
-        color: Colors.orange,
-      ),
+    ShellRoute(
+      navigatorKey: _shellNavigatorKey,
+      builder: (context, state, child) => child,
+      routes: [
+        GoRoute(
+          path: '/home/:tab',
+          builder: (context, state) => HomePage(
+            key: state.pageKey,
+            tab:  state.pathParameters['tab']?? 'dashboard',
+          ),
+        )
+      ],
     ),
-    GoRoute(
-      path: '/home',
-      builder: (context, state) => HomePage(),
-    )
   ],
 );
-

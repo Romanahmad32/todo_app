@@ -7,12 +7,14 @@ class OverviewPage extends StatelessWidget {
 
   static const pageConfig = PageConfig(
     icon: Icons.work_history,
-    name: 'Overview',
+    name: 'overview',
     child: OverviewPage(),
   );
 
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Container(
+      color: Colors.tealAccent,
+    );
   }
 }
