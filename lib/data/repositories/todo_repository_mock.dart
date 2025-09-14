@@ -87,4 +87,17 @@ class ToDoRepositoryMock implements ToDoRepository {
       );
     }
   }
+
+  @override
+  Future<Either<Failure, ToDoEntry>> updateToDoEntry(
+      CollectionId collectionId, EntryId entryId) {
+    final index = toDoEntries.indexWhere((entry) => entry.id == entryId);
+    final entryToUpdate = toDoEntries[index];
+    final updatedEntry = entryToUpdate.copyWith(isDone: !entryToUpdate.isDone);
+    toDoEntries[index] = updatedEntry;
+    return Future.delayed(
+      const Duration(milliseconds: 50),
+      () => Right(updatedEntry),
+    );
+  }
 }

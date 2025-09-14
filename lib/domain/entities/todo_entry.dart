@@ -18,4 +18,16 @@ class ToDoEntry {
       isDone: false,
     );
   }
+
+  ToDoEntry copyWith({
+    String? description,
+    bool? isDone,
+    EntryId? id,
+  }) {
+    return ToDoEntry(
+      description: description ?? this.description,
+      isDone: isDone ?? this.isDone,
+      id: id ?? this.id,
+    );
+  }
 }
