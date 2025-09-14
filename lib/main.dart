@@ -1,10 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:todo_app/domain/repositories/todo_repository.dart';
 
 import 'core/router/routes.dart';
+import 'data/repositories/todo_repository_mock.dart';
 
 void main() {
-  runApp(const ToDoApp());
+  runApp(
+    RepositoryProvider<ToDoRepository>(
+      create: (context) => ToDoRepositoryMock(),
+      child: const ToDoApp(),
+    ),
+  );
 }
 
 class ToDoApp extends StatelessWidget {
