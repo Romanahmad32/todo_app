@@ -17,21 +17,21 @@ class ToDoRepositoryMock implements ToDoRepository {
   );
   final todoCollections = List<ToDoCollection>.generate(
       10,
-          (index) => ToDoCollection(
-        id: CollectionId.fromUniqueString(index.toString()),
-        title: 'title $index',
-        color: ToDoColor(
-            colorIndex: index % ToDoColor.predefinedColors.length),
-      ));
+      (index) => ToDoCollection(
+            id: CollectionId.fromUniqueString(index.toString()),
+            title: 'title $index',
+            color: ToDoColor(
+                colorIndex: index % ToDoColor.predefinedColors.length),
+          ));
 
   @override
   Future<Either<Failure, List<ToDoCollection>>> readToDoCollections() {
-    try{
+    try {
       return Future.delayed(
         Duration(milliseconds: 200),
         () => Right(todoCollections),
       );
-    }on Exception catch(e){
+    } on Exception catch (e) {
       return Future.value(
         Left(
           ServerFailure(
@@ -45,13 +45,14 @@ class ToDoRepositoryMock implements ToDoRepository {
   @override
   Future<Either<Failure, ToDoEntry>> readToDoEntry(
       CollectionId collectionId, EntryId entryId) {
-    try{
-      final selectedEntryItem = toDoEntries.firstWhere((entry) => entry.id == entryId);
+    try {
+      final selectedEntryItem =
+          toDoEntries.firstWhere((entry) => entry.id == entryId);
       return Future.delayed(
         Duration(milliseconds: 200),
-            () => Right(selectedEntryItem),
+        () => Right(selectedEntryItem),
       );
-    }on Exception catch(e){
+    } on Exception catch (e) {
       return Future.value(
         Left(
           ServerFailure(
@@ -73,7 +74,7 @@ class ToDoRepositoryMock implements ToDoRepository {
           .map((entry) => entry.id)
           .toList();
       return Future.delayed(
-         const Duration(milliseconds: 300),
+        const Duration(milliseconds: 300),
         () => Right(entryIds),
       );
     } on Exception catch (e) {

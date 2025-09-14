@@ -25,6 +25,7 @@ class CollectionId extends UniqueId {
     return CollectionId._(uniqueString);
   }
 }
+
 class EntryId extends UniqueId {
   const EntryId._(String value) : super._(value);
 
@@ -36,4 +37,3 @@ class EntryId extends UniqueId {
     return EntryId._(uniqueString);
   }
 }
-
