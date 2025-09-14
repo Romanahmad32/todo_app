@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:todo_app/presentation/core/page_config.dart';
+import 'package:todo_app/presentation/pages/detail/view_states/todo_detail_error.dart';
+import 'package:todo_app/presentation/pages/detail/view_states/todo_detail_loaded.dart';
+import 'package:todo_app/presentation/pages/detail/view_states/todo_detail_loading.dart';
 
 import '../../../domain/entities/unique_id.dart';
 import '../../../domain/repositories/todo_repository.dart';
@@ -21,15 +24,15 @@ class ToDoDetailPageProvider extends StatelessWidget {
           toDoRepository: RepositoryProvider.of<ToDoRepository>(context),
         ),
       )..fetch(),
-      child: TodoDetailPage(collectionId: collectionId),
+      child: ToDoDetailPage(collectionId: collectionId),
     );
   }
 }
 
-class TodoDetailPage extends StatelessWidget {
+class ToDoDetailPage extends StatelessWidget {
   final CollectionId collectionId;
 
-  const TodoDetailPage({super.key, required this.collectionId});
+  const ToDoDetailPage({super.key, required this.collectionId});
 
   static const PageConfig pageConfig = PageConfig(
     icon: Icons.details_rounded,
@@ -41,7 +44,16 @@ class TodoDetailPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<ToDoDetailCubit, ToDoDetailCubitState>(
       builder: (context, state) {
-        return Placeholder();
+        if (state is ToDoDetailCubitStateLoading) {
+          return TodoDetailLoading();
+        }
+        if (state is ToDoDetailCubitStateLoaded) {
+          return TodoDetailLoaded(
+            collectionId: collectionId,
+            entryIds: state.entryIds,
+          );
+        }
+        return const TodoDetailError();
       },
     );
   }
