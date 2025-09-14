@@ -6,13 +6,13 @@ import '../entities/unique_id.dart';
 import '../failures/failures.dart';
 import '../repositories/todo_repository.dart';
 
-class LoadToDoEntry implements UseCase<ToDoEntry, ToDoEntryParams> {
+class LoadToDoEntry implements UseCase<ToDoEntry, LoadToDoEntryParams> {
   final ToDoRepository toDoRepository;
 
   const LoadToDoEntry({required this.toDoRepository});
 
   @override
-  Future<Either<Failure, ToDoEntry>> call(ToDoEntryParams params) async {
+  Future<Either<Failure, ToDoEntry>> call(LoadToDoEntryParams params) async {
     try {
       final loadedEntry = await toDoRepository.readToDoEntry(
           params.collectionId, params.entryId);
@@ -27,12 +27,12 @@ class LoadToDoEntry implements UseCase<ToDoEntry, ToDoEntryParams> {
   }
 }
 
-class ToDoEntryParams extends Params {
+class LoadToDoEntryParams extends Params {
   final String? description;
   final CollectionId collectionId;
   final EntryId entryId;
 
-  ToDoEntryParams({
+  LoadToDoEntryParams({
     required this.collectionId,
     this.description,
     required this.entryId,
