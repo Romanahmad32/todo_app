@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_adaptive_scaffold/flutter_adaptive_scaffold.dart';
 import 'package:go_router/go_router.dart';
+import 'package:todo_app/presentation/core/page_config.dart';
 
 import '../dashboard/dashboard_page.dart';
 import '../overview/overview_page.dart';
@@ -14,10 +15,13 @@ class HomePage extends StatefulWidget {
     required String tab,
   }) : index = HomePage.tabs.indexWhere((element) => element.name == tab);
 
+  static const PageConfig pageConfig = PageConfig(
+    icon: Icons.home,
+    name: 'home',
+  );
   static const tabs = [
     DashboardPage.pageConfig,
     OverviewPage.pageConfig,
-    SettingsPage.pageConfig
   ];
 
   @override
@@ -39,8 +43,18 @@ class _HomePageState extends State<HomePage> {
             Breakpoints.mediumAndUp: SlotLayout.from(
               key: Key('primary-navigation-medium'),
               builder: (context) => AdaptiveScaffold.standardNavigationRail(
-                selectedIconTheme: IconThemeData(color: Theme.of(context).colorScheme.onBackground),
-                unselectedIconTheme: IconThemeData(color: Theme.of(context).colorScheme.onBackground.withAlpha(95)),
+                trailing: IconButton(
+                    onPressed: () =>
+                        context.pushNamed(SettingsPage.pageConfig.name),
+                    icon: Icon(Icons.settings)),
+                selectedIconTheme: IconThemeData(
+                  color: Theme.of(context).colorScheme.onBackground,
+                ),
+                unselectedIconTheme: IconThemeData(
+                    color: Theme.of(context)
+                        .colorScheme
+                        .onBackground
+                        .withAlpha(95)),
                 selectedIndex: widget.index,
                 destinations: destinations
                     .map(
@@ -85,5 +99,6 @@ class _HomePageState extends State<HomePage> {
   }
 
   void _tapOnNavigationDestination(BuildContext context, int index) =>
-      context.go('/home/${HomePage.tabs[index].name}');
+      context.goNamed(HomePage.pageConfig.name,
+          pathParameters: {'tab': HomePage.tabs[index].name});
 }
