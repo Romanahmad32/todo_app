@@ -7,6 +7,10 @@ import '../failures/failures.dart';
 
 abstract class ToDoRepository {
   Future<Either<Failure, List<ToDoCollection>>> readToDoCollections();
-  Future<Either<Failure, ToDoEntry>> readToDoEntry(CollectionId collectionId, EntryId entryId);
-  Future<Either<Failure, List<EntryId>>> readToDoEntryIds(CollectionId collectionId);
+
+  Future<Either<Failure, ToDoEntry>> readToDoEntry(
+      CollectionId collectionId, EntryId entryId);
+
+  Future<Either<Failure, List<EntryId>>> readToDoEntryIds(
+      CollectionId collectionId);
 }
