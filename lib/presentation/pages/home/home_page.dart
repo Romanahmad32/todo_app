@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_adaptive_scaffold/flutter_adaptive_scaffold.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:todo_app/presentation/core/page_config.dart';
+import 'package:todo_app/presentation/pages/detail/todo_detail_page.dart';
+import 'package:todo_app/presentation/pages/home/blocs/navigation_todo_cubit.dart';
 
 import '../dashboard/dashboard_page.dart';
 import '../overview/overview_page.dart';
@@ -90,7 +93,21 @@ class _HomePageState extends State<HomePage> {
           secondaryBody: SlotLayout(config: <Breakpoint, SlotLayoutConfig>{
             Breakpoints.mediumAndUp: SlotLayout.from(
               key: const Key('secondary-body'),
-              builder: AdaptiveScaffold.emptyBuilder,
+              builder: widget.index != 1
+                  ? null
+                  : (context) => BlocBuilder<NavigationToDoCubit,
+                          NavigationToDoCubitState>(
+                        builder: (context, state) {
+                          final selectedId = state.selectedCollectionId;
+                          final isSecondBodyDisplayed = Breakpoints.mediumAndUp.isActive(context);
+                          context.read<NavigationToDoCubit>().secondBodyHasChanged(isSecondBodyDisplayed: isSecondBodyDisplayed);
+                          if (selectedId == null) return const Placeholder();
+                          return ToDoDetailPageProvider(
+                            key: Key(selectedId.value),
+                            collectionId: selectedId,
+                          );
+                        },
+                      ),
             )
           }),
         ),
