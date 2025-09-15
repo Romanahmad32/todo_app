@@ -10,7 +10,6 @@ class NavigationToDoCubit extends Cubit<NavigationToDoCubitState> {
   NavigationToDoCubit() : super(const NavigationToDoCubitState());
 
   void selectedToDoCollectionChanged(CollectionId collectionId) {
-    debugPrint(collectionId.value);
     emit(NavigationToDoCubitState(selectedCollectionId: collectionId));
   }
 

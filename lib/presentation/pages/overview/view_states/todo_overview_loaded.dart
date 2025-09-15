@@ -14,32 +14,39 @@ class TodoOverviewLoaded extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    ;
-    return ListView.builder(
-      itemCount: collections.length,
-      itemBuilder: (context, index) {
-        final item = collections[index];
-        final colorScheme = Theme.of(context).colorScheme;
-        return ListTile(
-          tileColor: colorScheme.surface,
-          iconColor: item.color.color,
-          title: Text(item.title),
-          subtitle: Text(item.id.value),
-          selectedColor: item.color.color,
-          onTap: () {
-            context.read<NavigationToDoCubit>().selectedToDoCollectionChanged(
-                  item.id,
-                );
-            if (Breakpoints.small.isActive(context)) {
-              context.pushNamed(
-                ToDoDetailPage.pageConfig.name,
-                pathParameters: {
-                  'collectionId': item.id.value,
-                },
-              );
-            }
+    return BlocBuilder<NavigationToDoCubit, NavigationToDoCubitState>(
+      buildWhen: (previous, current) => previous.selectedCollectionId != current.selectedCollectionId,
+      builder: (context, state) {
+        return ListView.builder(
+          itemCount: collections.length,
+          itemBuilder: (context, index) {
+            final item = collections[index];
+            final colorScheme = Theme.of(context).colorScheme;
+            return ListTile(
+              tileColor: colorScheme.surface,
+              iconColor: item.color.color,
+              title: Text(item.title),
+              subtitle: Text(item.id.value),
+              selected: state.selectedCollectionId == item.id,
+              selectedColor: item.color.color,
+              onTap: () {
+                context
+                    .read<NavigationToDoCubit>()
+                    .selectedToDoCollectionChanged(
+                      item.id,
+                    );
+                if (Breakpoints.small.isActive(context)) {
+                  context.pushNamed(
+                    ToDoDetailPage.pageConfig.name,
+                    pathParameters: {
+                      'collectionId': item.id.value,
+                    },
+                  );
+                }
+              },
+              leading: const Icon(Icons.circle),
+            );
           },
-          leading: const Icon(Icons.circle),
         );
       },
     );
