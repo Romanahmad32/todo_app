@@ -26,7 +26,6 @@ class TodoOverviewLoaded extends StatelessWidget {
               tileColor: colorScheme.surface,
               iconColor: item.color.color,
               title: Text(item.title),
-              subtitle: Text(item.id.value),
               selected: state.selectedCollectionId == item.id,
               selectedColor: item.color.color,
               onTap: () {
