@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:todo_app/domain/entities/unique_id.dart';
+import 'package:todo_app/presentation/pages/create_todo_collection/create_todo_collection_page.dart';
 import 'package:todo_app/presentation/pages/home/home_page.dart';
 import 'package:todo_app/presentation/pages/overview/overview_page.dart';
 import 'package:todo_app/presentation/pages/settings/settings_page.dart';
@@ -41,14 +42,38 @@ final routes = GoRouter(
       ],
     ),
     GoRoute(
+      path: '$_basePath/overview/${CreateTodoCollectionPage.pageConfig.name}',
+      name: CreateTodoCollectionPage.pageConfig.name,
+      builder: (context, state) => Scaffold(
+        appBar: AppBar(
+          title: Text('details'),
+          leading: BackButton(
+            onPressed: () {
+              if (context.canPop()) {
+                context.pop();
+              } else {
+                context.goNamed(
+                  HomePage.pageConfig.name,
+                  pathParameters: {'tab': OverviewPage.pageConfig.name},
+                );
+              }
+            },
+          ),
+        ),
+        body: SafeArea(child: CreateTodoCollectionPage.pageConfig.child!),
+      ),
+    ),
+    GoRoute(
       name: ToDoDetailPage.pageConfig.name,
       path: '$_basePath/overview/:collectionId',
-      builder: (context, state) => BlocListener<NavigationToDoCubit, NavigationToDoCubitState>(
-        listenWhen: (previous, current) => previous.isSecondBodyDisplayed != current.isSecondBodyDisplayed,
+      builder: (context, state) =>
+          BlocListener<NavigationToDoCubit, NavigationToDoCubitState>(
+        listenWhen: (previous, current) =>
+            previous.isSecondBodyDisplayed != current.isSecondBodyDisplayed,
         listener: (context, state) {
-         if(context.canPop() && (state.isSecondBodyDisplayed ?? false) ){
-           context.pop();
-         }
+          if (context.canPop() && (state.isSecondBodyDisplayed ?? false)) {
+            context.pop();
+          }
         },
         child: Scaffold(
           appBar: AppBar(
