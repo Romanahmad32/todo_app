@@ -48,6 +48,7 @@ class _HomePageState extends State<HomePage> {
               key: Key('primary-navigation-medium'),
               builder: (context) => AdaptiveScaffold.standardNavigationRail(
                 leading: IconButton(
+                  key: Key('create-todo-collection'),
                   onPressed: () {
                     context.pushNamed(CreateTodoCollectionPage.pageConfig.name);
                   },
@@ -57,7 +58,7 @@ class _HomePageState extends State<HomePage> {
                 trailing: IconButton(
                     onPressed: () =>
                         context.pushNamed(SettingsPage.pageConfig.name),
-                    icon: Icon(Icons.settings)),
+                    icon: Icon(SettingsPage.pageConfig.icon)),
                 selectedIconTheme: IconThemeData(
                   color: Theme.of(context).colorScheme.onBackground,
                 ),
