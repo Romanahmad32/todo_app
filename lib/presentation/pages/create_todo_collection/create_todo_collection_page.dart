@@ -7,6 +7,9 @@ import 'package:todo_app/domain/use_cases/create_todo_collection.dart';
 import 'package:todo_app/presentation/core/page_config.dart';
 import 'package:todo_app/presentation/pages/create_todo_collection/bloc/create_todo_collection_page_cubit.dart';
 
+import '../../../domain/entities/unique_id.dart';
+import '../detail/todo_detail_page.dart';
+
 class CreateTodoCollectionPageProvider extends StatelessWidget {
   const CreateTodoCollectionPageProvider({super.key});
 
@@ -85,7 +88,7 @@ class _CreateTodoCollectionPageState extends State<CreateTodoCollectionPage> {
                 final isValid = _formKey.currentState?.validate() ?? false;
                 if (isValid) {
                   context.read<CreateToDoCollectionPageCubit>().submit();
-                  context.pop();
+                  context.pop(true);
                 }
               },
               child: const Text('Save Collection'),

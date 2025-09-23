@@ -10,6 +10,8 @@ import '../../../domain/repositories/todo_repository.dart';
 import '../../../domain/use_cases/load_todo_entry_ids_for_collection.dart';
 import 'blocs/todo_detail_cubit.dart';
 
+typedef ToDoEntryItemAddedCallback = Function();
+
 class ToDoDetailPageProvider extends StatelessWidget {
   final CollectionId collectionId;
 

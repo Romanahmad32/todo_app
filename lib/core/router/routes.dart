@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:todo_app/domain/entities/unique_id.dart';
 import 'package:todo_app/presentation/pages/create_todo_collection/create_todo_collection_page.dart';
+import 'package:todo_app/presentation/pages/create_todo_entry/create_todo_entry_page.dart';
 import 'package:todo_app/presentation/pages/home/home_page.dart';
 import 'package:todo_app/presentation/pages/overview/overview_page.dart';
 import 'package:todo_app/presentation/pages/settings/settings_page.dart';
@@ -62,6 +63,35 @@ final routes = GoRouter(
         ),
         body: SafeArea(child: CreateTodoCollectionPage.pageConfig.child!),
       ),
+    ),
+    GoRoute(
+      path: '$_basePath/overview/${CreateTodoEntryPage.pageConfig.name}',
+      name: CreateTodoEntryPage.pageConfig.name,
+      builder: (context, state) {
+        final castedExtra = state.extra as CreateToDoEntryPageExtra;
+        return Scaffold(
+          appBar: AppBar(
+            title: Text('details'),
+            leading: BackButton(
+              onPressed: () {
+                if (context.canPop()) {
+                  context.pop();
+                } else {
+                  context.goNamed(
+                    HomePage.pageConfig.name,
+                    pathParameters: {'tab': OverviewPage.pageConfig.name},
+                  );
+                }
+              },
+            ),
+          ),
+          body: SafeArea(
+              child: CreateTodoEntryPageProvider(
+            collectionId: castedExtra.collectionId,
+            toDoEntryItemAddedCallback: castedExtra.todoEntryItemAddedCallback,
+          )),
+        );
+      },
     ),
     GoRoute(
       name: ToDoDetailPage.pageConfig.name,

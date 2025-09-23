@@ -23,4 +23,5 @@ abstract class ToDoRepository {
     EntryId entryId,
   );
   Future<Either<Failure,bool>> createToDoCollection(ToDoCollection collection);
+  Future<Either<Failure,bool>> createToDoEntry(ToDoEntry entry);
 }
