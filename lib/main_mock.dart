@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:todo_app/data/local/memory_local_data_source.dart';
-import 'package:todo_app/data/repositories/todo_repository_local.dart';
 import 'package:todo_app/domain/repositories/todo_repository.dart';
 import 'package:todo_app/presentation/pages/home/blocs/navigation_todo_cubit.dart';
 
@@ -12,7 +10,7 @@ import 'data/repositories/todo_repository_mock.dart';
 void main() {
   runApp(
     RepositoryProvider<ToDoRepository>(
-      create: (context) => ToDoRepositoryLocal(localDataSource: MemoryLocalDataSource()),
+      create: (context) => ToDoRepositoryMock(),
       child: const ToDoApp(),
     ),
   );
