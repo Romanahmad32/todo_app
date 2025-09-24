@@ -15,6 +15,7 @@ class TodoOverviewLoaded extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final shouldDisplayAddItemButton = Breakpoints.small.isActive(context);
     return BlocBuilder<NavigationToDoCubit, NavigationToDoCubitState>(
       buildWhen: (previous, current) =>
           previous.selectedCollectionId != current.selectedCollectionId,
@@ -51,22 +52,23 @@ class TodoOverviewLoaded extends StatelessWidget {
                 );
               },
             ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Align(
-
-                alignment: Alignment.bottomRight,
-                child: FloatingActionButton(
-                  key: Key('create-todo-collection'),
-                  heroTag: 'create-todo-collection',
-                  onPressed: () => context
-                      .pushNamed(CreateTodoCollectionPage.pageConfig.name),
-                  child: Icon(
-                    CreateTodoCollectionPage.pageConfig.icon,
+         if(shouldDisplayAddItemButton)
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Align(
+                  alignment: Alignment.bottomRight,
+                  child: FloatingActionButton(
+                    key: Key('create-todo-collection'),
+                    heroTag: 'create-todo-collection',
+                    onPressed: () => context
+                        .pushNamed(CreateTodoCollectionPage.pageConfig.name),
+                    child: Icon(
+                      CreateTodoCollectionPage.pageConfig.icon,
+                    ),
                   ),
                 ),
-              ),
-            )
+              )
+
           ],
         );
       },

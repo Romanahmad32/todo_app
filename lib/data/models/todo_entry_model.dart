@@ -1,5 +1,7 @@
 import 'package:equatable/equatable.dart';
-
+import 'package:json_annotation/json_annotation.dart';
+part 'todo_entry_model.g.dart';
+@JsonSerializable()
 class ToDoEntryModel extends Equatable {
   final String id;
   final String description;
@@ -12,20 +14,8 @@ class ToDoEntryModel extends Equatable {
   });
 
 
-  factory ToDoEntryModel.fromJson(Map<String, dynamic> json) {
-    return ToDoEntryModel(
-      id: json['id'],
-      description: json['description'],
-      isDone: json['isDone'],
-    );
-  }
-  Map<String, dynamic> toJson() {
-    return {
-      'id': id,
-      'description': description,
-      'isDone': isDone,
-    };
-  }
+  factory ToDoEntryModel.fromJson(Map<String, dynamic> json) => _$ToDoEntryModelFromJson(json);
+  Map<String, dynamic> toJson() => _$ToDoEntryModelToJson(this);
 
   @override
   List<Object?> get props => [description, isDone, id];

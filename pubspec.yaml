@@ -25,6 +25,7 @@ dependencies:
   shimmer_animation: ^2.2.2
   json_serializable: ^6.11.1
   json_annotation: ^4.9.0
+  build_runner: ^2.8.0
 
 dev_dependencies:
   flutter_test:
