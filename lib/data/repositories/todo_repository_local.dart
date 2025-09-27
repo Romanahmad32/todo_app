@@ -36,10 +36,12 @@ class ToDoRepositoryLocal extends ToDoRepository {
   }
 
   @override
-  Future<Either<Failure, bool>> createToDoEntry(CollectionId collectionId,ToDoEntry entry) {
+  Future<Either<Failure, bool>> createToDoEntry(
+      CollectionId collectionId, ToDoEntry entry) {
     try {
       final result = localDataSource.createToDoEntry(
-        collectionId: collectionId,entry: toDoEntryToModel(entry) ,
+        collectionId: collectionId.value,
+        entry: toDoEntryToModel(entry),
       );
       return Future.value(Right(true));
     } on CacheException catch (e) {
@@ -50,12 +52,13 @@ class ToDoRepositoryLocal extends ToDoRepository {
   }
 
   @override
-  Future<Either<Failure, List<ToDoCollection>>> readToDoCollections()async {
+  Future<Either<Failure, List<ToDoCollection>>> readToDoCollections() async {
     try {
       final collectionIds = await localDataSource.getToDoCollectionIds();
       final List<ToDoCollection> collections = [];
-      for(String collectionId in collectionIds){
-        final collection = await localDataSource.getToDoCollection(collectionId: collectionId);
+      for (String collectionId in collectionIds) {
+        final collection =
+            await localDataSource.getToDoCollection(collectionId: collectionId);
         collections.add(toDoCollectionFromModel(collection));
       }
       return Right(collections);
@@ -68,11 +71,11 @@ class ToDoRepositoryLocal extends ToDoRepository {
 
   @override
   Future<Either<Failure, ToDoEntry>> readToDoEntry(
-      CollectionId collectionId, EntryId entryId)async{
+      CollectionId collectionId, EntryId entryId) async {
     try {
       final result = await localDataSource.getToDoEntry(
-      collectionId: collectionId.value,
-      entryId:   entryId.value,
+        collectionId: collectionId.value,
+        entryId: entryId.value,
       );
       return Right(toDoEntryFromModel(result));
     } on CacheException catch (e) {
@@ -84,11 +87,12 @@ class ToDoRepositoryLocal extends ToDoRepository {
 
   @override
   Future<Either<Failure, List<EntryId>>> readToDoEntryIds(
-      CollectionId collectionId)async {
+      CollectionId collectionId) async {
     try {
-      final result = await localDataSource.getToDoEntryIds(collectionId: collectionId.value);
+      final result = await localDataSource.getToDoEntryIds(
+          collectionId: collectionId.value);
       List<EntryId> entryIds = [];
-      for(String entryId in result){
+      for (String entryId in result) {
         entryIds.add(EntryId.fromUniqueString(entryId));
       }
       return Right(entryIds);
@@ -101,9 +105,10 @@ class ToDoRepositoryLocal extends ToDoRepository {
 
   @override
   Future<Either<Failure, ToDoEntry>> updateToDoEntry(
-      CollectionId collectionId, EntryId entryId)async {
+      CollectionId collectionId, EntryId entryId) async {
     try {
-      final result = await localDataSource.updateToDoEntry(collectionId: collectionId.value, entryId: entryId.value);
+      final result = await localDataSource.updateToDoEntry(
+          collectionId: collectionId.value, entryId: entryId.value);
       return Right(toDoEntryFromModel(result));
     } on CacheException catch (e) {
       return Future.value(Left(CacheFailure(stackTrace: e.toString())));
@@ -116,9 +121,7 @@ class ToDoRepositoryLocal extends ToDoRepository {
 // entry to model
 ToDoEntryModel toDoEntryToModel(ToDoEntry entry) {
   return ToDoEntryModel(
-      id: entry.id.value,
-      description: entry.description,
-      isDone: entry.isDone);
+      id: entry.id.value, description: entry.description, isDone: entry.isDone);
 }
 
 // model to entry
