@@ -18,7 +18,7 @@ class TodoOverviewLoaded extends StatelessWidget {
     final shouldDisplayAddItemButton = Breakpoints.small.isActive(context);
     return BlocBuilder<NavigationToDoCubit, NavigationToDoCubitState>(
       buildWhen: (previous, current) =>
-          previous.selectedCollectionId != current.selectedCollectionId,
+      previous.selectedCollectionId != current.selectedCollectionId,
       builder: (context, state) {
         return Stack(
           children: [
@@ -26,7 +26,9 @@ class TodoOverviewLoaded extends StatelessWidget {
               itemCount: collections.length,
               itemBuilder: (context, index) {
                 final item = collections[index];
-                final colorScheme = Theme.of(context).colorScheme;
+                final colorScheme = Theme
+                    .of(context)
+                    .colorScheme;
                 return ListTile(
                   tileColor: colorScheme.surface,
                   iconColor: item.color.color,
@@ -37,8 +39,8 @@ class TodoOverviewLoaded extends StatelessWidget {
                     context
                         .read<NavigationToDoCubit>()
                         .selectedToDoCollectionChanged(
-                          item.id,
-                        );
+                      item.id,
+                    );
                     if (Breakpoints.small.isActive(context)) {
                       context.pushNamed(
                         ToDoDetailPage.pageConfig.name,
@@ -52,7 +54,7 @@ class TodoOverviewLoaded extends StatelessWidget {
                 );
               },
             ),
-         if(shouldDisplayAddItemButton)
+            if(shouldDisplayAddItemButton)
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Align(
@@ -60,15 +62,16 @@ class TodoOverviewLoaded extends StatelessWidget {
                   child: FloatingActionButton(
                     key: Key('create-todo-collection'),
                     heroTag: 'create-todo-collection',
-                    onPressed: () => context
-                        .pushNamed(CreateTodoCollectionPage.pageConfig.name),
+                    onPressed: () =>
+                        context
+                            .pushNamed(
+                            CreateTodoCollectionPage.pageConfig.name),
                     child: Icon(
                       CreateTodoCollectionPage.pageConfig.icon,
                     ),
                   ),
                 ),
               )
-
           ],
         );
       },
