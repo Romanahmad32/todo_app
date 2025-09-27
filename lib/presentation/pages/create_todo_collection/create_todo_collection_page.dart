@@ -21,7 +21,7 @@ class CreateTodoCollectionPageProvider extends StatelessWidget {
           toDoRepository: RepositoryProvider.of<ToDoRepository>(context),
         ),
       ),
-      child:  CreateTodoCollectionPage(),
+      child: CreateTodoCollectionPage(),
     );
   }
 }
@@ -85,11 +85,12 @@ class _CreateTodoCollectionPageState extends State<CreateTodoCollectionPage> {
             ),
             ElevatedButton(
               onPressed: () {
-                final isValid = _formKey.currentState?.validate() ?? false;
-                if (isValid) {
-                  context.read<CreateToDoCollectionPageCubit>().submit();
-                  context.pop(true);
-                }
+                final isValid = _formKey.currentState?.validate();
+                if (isValid == true) {
+                  context.read<CreateToDoCollectionPageCubit>().submit().then(
+                        (_) => context.pop(true),
+                      );
+                 }
               },
               child: const Text('Save Collection'),
             )

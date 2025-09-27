@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:todo_app/domain/entities/todo_collection.dart';
 import 'package:todo_app/presentation/pages/detail/todo_detail_page.dart';
+import 'package:todo_app/presentation/pages/overview/blocs/todo_overview_cubit.dart';
 
 import '../../create_todo_collection/create_todo_collection_page.dart';
 import '../../home/blocs/navigation_todo_cubit.dart';
@@ -15,10 +16,9 @@ class TodoOverviewLoaded extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final shouldDisplayAddItemButton = Breakpoints.small.isActive(context);
     return BlocBuilder<NavigationToDoCubit, NavigationToDoCubitState>(
       buildWhen: (previous, current) =>
-      previous.selectedCollectionId != current.selectedCollectionId,
+          previous.selectedCollectionId != current.selectedCollectionId,
       builder: (context, state) {
         return Stack(
           children: [
@@ -26,9 +26,7 @@ class TodoOverviewLoaded extends StatelessWidget {
               itemCount: collections.length,
               itemBuilder: (context, index) {
                 final item = collections[index];
-                final colorScheme = Theme
-                    .of(context)
-                    .colorScheme;
+                final colorScheme = Theme.of(context).colorScheme;
                 return ListTile(
                   tileColor: colorScheme.surface,
                   iconColor: item.color.color,
@@ -39,8 +37,8 @@ class TodoOverviewLoaded extends StatelessWidget {
                     context
                         .read<NavigationToDoCubit>()
                         .selectedToDoCollectionChanged(
-                      item.id,
-                    );
+                          item.id,
+                        );
                     if (Breakpoints.small.isActive(context)) {
                       context.pushNamed(
                         ToDoDetailPage.pageConfig.name,
@@ -54,24 +52,32 @@ class TodoOverviewLoaded extends StatelessWidget {
                 );
               },
             ),
-            if(shouldDisplayAddItemButton)
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Align(
-                  alignment: Alignment.bottomRight,
-                  child: FloatingActionButton(
-                    key: Key('create-todo-collection'),
-                    heroTag: 'create-todo-collection',
-                    onPressed: () =>
-                        context
-                            .pushNamed(
-                            CreateTodoCollectionPage.pageConfig.name),
-                    child: Icon(
-                      CreateTodoCollectionPage.pageConfig.icon,
-                    ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Align(
+                alignment: Alignment.bottomRight,
+                child: FloatingActionButton(
+                  key: Key('create-todo-collection'),
+                  heroTag: 'create-todo-collection',
+                  onPressed: () {
+                    context
+                        .pushNamed(CreateTodoCollectionPage.pageConfig.name)
+                        .then(
+                      (value) {
+                        if (value == true) {
+                          context
+                              .read<ToDoOverviewCubit>()
+                              .readToDoCollections();
+                        }
+                      },
+                    );
+                  },
+                  child: Icon(
+                    CreateTodoCollectionPage.pageConfig.icon,
                   ),
                 ),
-              )
+              ),
+            )
           ],
         );
       },
