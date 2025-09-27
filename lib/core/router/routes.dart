@@ -35,7 +35,7 @@ final routes = GoRouter(
         GoRoute(
           name: HomePage.pageConfig.name,
           path: '$_basePath/:tab',
-          builder: (context, state) => HomePage(
+          builder: (context, state) => HomePageProvider(
             key: state.pageKey,
             tab: state.pathParameters['tab'] ?? 'dashboard',
           ),
@@ -97,37 +97,28 @@ final routes = GoRouter(
       name: ToDoDetailPage.pageConfig.name,
       path: '$_basePath/overview/:collectionId',
       builder: (context, state) =>
-          BlocListener<NavigationToDoCubit, NavigationToDoCubitState>(
-        listenWhen: (previous, current) =>
-            previous.isSecondBodyDisplayed != current.isSecondBodyDisplayed,
-        listener: (context, state) {
-          if (context.canPop() && (state.isSecondBodyDisplayed ?? false)) {
-            context.pop();
-          }
-        },
-        child: Scaffold(
-          appBar: AppBar(
-            title: Text('details'),
-            leading: BackButton(
-              onPressed: () {
-                if (context.canPop()) {
-                  context.pop();
-                } else {
-                  context.goNamed(
-                    HomePage.pageConfig.name,
-                    pathParameters: {'tab': OverviewPage.pageConfig.name},
-                  );
-                }
-              },
+          Scaffold(
+            appBar: AppBar(
+              title: Text('details'),
+              leading: BackButton(
+                onPressed: () {
+                  if (context.canPop()) {
+                    context.pop();
+                  } else {
+                    context.goNamed(
+                      HomePage.pageConfig.name,
+                      pathParameters: {'tab': OverviewPage.pageConfig.name},
+                    );
+                  }
+                },
+              ),
+            ),
+            body: ToDoDetailPageProvider(
+              collectionId: CollectionId.fromUniqueString(
+                state.pathParameters['collectionId'] ?? '',
+              ),
             ),
           ),
-          body: ToDoDetailPageProvider(
-            collectionId: CollectionId.fromUniqueString(
-              state.pathParameters['collectionId'] ?? '',
-            ),
-          ),
-        ),
-      ),
     ),
   ],
 );
