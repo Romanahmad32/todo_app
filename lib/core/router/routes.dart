@@ -96,29 +96,28 @@ final routes = GoRouter(
     GoRoute(
       name: ToDoDetailPage.pageConfig.name,
       path: '$_basePath/overview/:collectionId',
-      builder: (context, state) =>
-          Scaffold(
-            appBar: AppBar(
-              title: Text('details'),
-              leading: BackButton(
-                onPressed: () {
-                  if (context.canPop()) {
-                    context.pop();
-                  } else {
-                    context.goNamed(
-                      HomePage.pageConfig.name,
-                      pathParameters: {'tab': OverviewPage.pageConfig.name},
-                    );
-                  }
-                },
-              ),
-            ),
-            body: ToDoDetailPageProvider(
-              collectionId: CollectionId.fromUniqueString(
-                state.pathParameters['collectionId'] ?? '',
-              ),
-            ),
+      builder: (context, state) => Scaffold(
+        appBar: AppBar(
+          title: Text('details'),
+          leading: BackButton(
+            onPressed: () {
+              if (context.canPop()) {
+                context.pop();
+              } else {
+                context.goNamed(
+                  HomePage.pageConfig.name,
+                  pathParameters: {'tab': OverviewPage.pageConfig.name},
+                );
+              }
+            },
           ),
+        ),
+        body: ToDoDetailPageProvider(
+          collectionId: CollectionId.fromUniqueString(
+            state.pathParameters['collectionId'] ?? '',
+          ),
+        ),
+      ),
     ),
   ],
 );

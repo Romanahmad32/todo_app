@@ -1,24 +1,34 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:go_router/go_router.dart';
 import 'package:todo_app/data/local/hive_local_data_source.dart';
-import 'package:todo_app/data/local/memory_local_data_source.dart';
 import 'package:todo_app/data/repositories/todo_repository_local.dart';
 import 'package:todo_app/domain/repositories/todo_repository.dart';
-import 'package:todo_app/presentation/pages/home/blocs/navigation_todo_cubit.dart';
+import 'package:todo_app/presentation/app/cubit/auth_cubit.dart';
 
 import 'core/router/routes.dart';
-import 'data/repositories/todo_repository_mock.dart';
+import 'firebase_options.dart';
 
-Future<void> main()async {
+Future<void> main() async {
   GoRouter.optionURLReflectsImperativeAPIs = true;
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  final authCubit = AuthCubit();
+  final authSub = FirebaseAuth.instance.authStateChanges().listen((user) {
+    authCubit.authStateChanged(user: user);
+  },);
   final localDatasource = HiveLocalDataSource();
   await localDatasource.initialize();
   runApp(
     RepositoryProvider<ToDoRepository>(
-      create: (context) => ToDoRepositoryLocal(localDataSource: localDatasource),
-      child: const ToDoApp(),
+      create: (context) =>
+          ToDoRepositoryLocal(localDataSource: localDatasource),
+      child: BlocProvider<AuthCubit>(
+        create: (context) => authCubit,
+        child: const ToDoApp(),
+      ),
     ),
   );
 }
