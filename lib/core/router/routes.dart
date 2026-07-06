@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:todo_app/domain/entities/unique_id.dart';
 import 'package:todo_app/presentation/pages/create_todo_collection/create_todo_collection_page.dart';
@@ -9,7 +8,6 @@ import 'package:todo_app/presentation/pages/overview/overview_page.dart';
 import 'package:todo_app/presentation/pages/settings/settings_page.dart';
 
 import '../../presentation/pages/detail/todo_detail_page.dart';
-import '../../presentation/pages/home/blocs/navigation_todo_cubit.dart';
 import 'go_router_observer.dart';
 
 final GlobalKey<NavigatorState> _rootNavigatorKey =

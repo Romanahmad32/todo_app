@@ -39,7 +39,7 @@ class ToDoRepositoryLocal extends ToDoRepository {
   Future<Either<Failure, bool>> createToDoEntry(
       CollectionId collectionId, ToDoEntry entry) {
     try {
-      final result = localDataSource.createToDoEntry(
+      localDataSource.createToDoEntry(
         collectionId: collectionId.value,
         entry: toDoEntryToModel(entry),
       );

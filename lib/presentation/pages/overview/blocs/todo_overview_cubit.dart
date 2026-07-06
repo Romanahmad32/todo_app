@@ -21,7 +21,7 @@ class ToDoOverviewCubit extends Cubit<ToDoOverviewCubitState> {
           (failure) => emit(ToDoOverviewCubitErrorState()),
           (collections) =>
               emit(ToDoOverviewCubitLoadedState(collections: collections)));
-    } on Exception catch (e) {
+    } on Exception {
       emit(ToDoOverviewCubitErrorState());
     }
   }

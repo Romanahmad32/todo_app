@@ -1,6 +1,5 @@
 import 'package:dartz/dartz.dart';
 import 'package:todo_app/core/use_cases/use_case.dart';
-import 'package:todo_app/domain/entities/todo_collection.dart';
 import 'package:todo_app/domain/entities/todo_entry.dart';
 import 'package:todo_app/domain/entities/unique_id.dart';
 import 'package:todo_app/domain/failures/failures.dart';

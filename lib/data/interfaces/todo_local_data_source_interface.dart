@@ -1,4 +1,3 @@
-import 'package:todo_app/domain/entities/todo_entry.dart';
 
 import '../models/todo_collection_model.dart';
 import '../models/todo_entry_model.dart';
