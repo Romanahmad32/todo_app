@@ -2,6 +2,12 @@
 
 A **responsive Flutter to-do app** that adapts its layout to the screen size (phone, tablet, desktop) using `flutter_adaptive_scaffold`. Built as a hands-on project to practice Clean Architecture and test-driven state management in Flutter.
 
+![Creating a collection and adding todos in the desktop layout](docs/media/create_todo_desktop.gif)
+
+**Same app, narrow screen** — the layout switches to a phone-style view:
+
+<img src="docs/media/mobile_view.gif" width="320" alt="Phone-sized window with the mobile layout">
+
 ## Features
 
 - Organize todos in **collections**, each with its own color
