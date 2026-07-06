@@ -21,6 +21,23 @@ jobs:
       - name: Install dependencies
         run: flutter pub get
 
+      # lib/firebase_options.dart is gitignored (private Firebase config),
+      # so CI analyzes against a stub with the same shape
+      - name: Create firebase_options.dart stub
+        run: |
+          cat > lib/firebase_options.dart << 'EOF'
+          import 'package:firebase_core/firebase_core.dart';
+
+          class DefaultFirebaseOptions {
+            static FirebaseOptions get currentPlatform => const FirebaseOptions(
+                  apiKey: 'ci-stub',
+                  appId: 'ci-stub',
+                  messagingSenderId: 'ci-stub',
+                  projectId: 'ci-stub',
+                );
+          }
+          EOF
+
       - name: Generate code
         run: dart run build_runner build --delete-conflicting-outputs
 

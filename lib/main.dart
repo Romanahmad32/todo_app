@@ -16,7 +16,7 @@ Future<void> main() async {
   GoRouter.optionURLReflectsImperativeAPIs = true;
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   final authCubit = AuthCubit();
-  final authSub = FirebaseAuth.instance.authStateChanges().listen((user) {
+  FirebaseAuth.instance.authStateChanges().listen((user) {
     authCubit.authStateChanged(user: user);
   },);
   final localDatasource = HiveLocalDataSource();

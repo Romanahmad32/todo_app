@@ -21,7 +21,7 @@ class ToDoDetailCubit extends Cubit<ToDoDetailCubitState> {
           LoadToDoEntryIdsParams(collectionId: collectionId));
       result.fold((left) => emit(ToDoDetailCubitStateError()),
           (right) => emit(ToDoDetailCubitStateLoaded(entryIds: right)));
-    } on Exception catch (e) {
+    } on Exception {
       emit(ToDoDetailCubitStateError());
     }
   }

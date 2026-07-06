@@ -3,7 +3,6 @@ import 'package:flutter_adaptive_scaffold/flutter_adaptive_scaffold.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:todo_app/presentation/core/page_config.dart';
-import 'package:todo_app/presentation/pages/create_todo_collection/create_todo_collection_page.dart';
 import 'package:todo_app/presentation/pages/detail/todo_detail_page.dart';
 import 'package:todo_app/presentation/pages/home/blocs/navigation_todo_cubit.dart';
 
