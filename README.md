@@ -1,5 +1,7 @@
 # todo_app
 
+[![CI](https://github.com/Romanahmad32/todo_app/actions/workflows/ci.yml/badge.svg)](https://github.com/Romanahmad32/todo_app/actions/workflows/ci.yml)
+
 A **responsive Flutter to-do app** that adapts its layout to the screen size (phone, tablet, desktop) using `flutter_adaptive_scaffold`. Built as a hands-on project to practice Clean Architecture and test-driven state management in Flutter.
 
 ![Creating a collection and adding todos in the desktop layout](docs/media/create_todo_desktop.gif)
