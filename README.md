@@ -39,3 +39,7 @@ To run against the in-memory mock data source instead of Hive:
 ```bash
 flutter run -t lib/main_mock.dart
 ```
+
+## License
+
+[MIT](LICENSE)
