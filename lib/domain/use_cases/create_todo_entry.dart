@@ -17,7 +17,7 @@ class CreateToDoEntry
       final createdEntry =
           await toDoRepository.createToDoEntry(params.collectionId,params.entry);
 
-      return createdEntry.fold(
+      return createdEntry.fold<Either<Failure, bool>>(
         (l) => Left(l),
         (r) => Right(r),
       );

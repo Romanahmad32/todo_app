@@ -17,7 +17,7 @@ class UpdateToDoEntry implements UseCase<ToDoEntry, UpdateToDoEntryParams> {
       final updatedEntry = await toDoRepository.updateToDoEntry(
           params.collectionId, params.entryId);
 
-      return updatedEntry.fold(
+      return updatedEntry.fold<Either<Failure, ToDoEntry>>(
         (left) => Left(left),
         (right) => Right(right),
       );

@@ -17,7 +17,7 @@ class LoadToDoEntryIdsForCollection
     try {
       final loadedEntryIds =
           await toDoRepository.readToDoEntryIds(params.collectionId);
-      return loadedEntryIds.fold((left) => Left(left), (right) => Right(right));
+      return loadedEntryIds.fold<Either<Failure, List<EntryId>>>((left) => Left(left), (right) => Right(right));
     } on Exception catch (e) {
       return Left(ServerFailure(stackTrace: e.toString()));
     }

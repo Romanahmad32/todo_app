@@ -13,7 +13,7 @@ class LoadToDoCollections implements UseCase<List<ToDoCollection>, NoParams> {
   Future<Either<Failure, List<ToDoCollection>>> call(NoParams params) async {
     try {
       final loadedCollections = await toDoRepository.readToDoCollections();
-      return loadedCollections.fold(
+      return loadedCollections.fold<Either<Failure, List<ToDoCollection>>>(
           (failure) => Left(failure), (collections) => Right(collections));
     } on Exception catch (e) {
       return Left(ServerFailure(stackTrace: e.toString()));
